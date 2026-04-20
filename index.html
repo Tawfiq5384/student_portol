@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Registration</title>
+   <style>* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 420px;
+    background: #ffffff;
+    padding: 25px 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+h3 {
+    margin-top: 20px;
+    color: #444;
+}
+
+form input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: 0.3s;
+}
+
+form input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 5px rgba(102,126,234,0.5);
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+ul {
+    list-style: none;
+    margin-top: 10px;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+li {
+    background: #f5f7ff;
+    padding: 10px;
+    margin: 6px 0;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+li:hover {
+    background: #e0e7ff;
+    transform: translateX(5px);
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Student Registration</h2>
+
+    <form id="form">
+        <input type="text" id="name" placeholder="Full Name" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="text" id="phone" placeholder="Phone" required>
+        <input type="text" id="course" placeholder="Course" required>
+        <button type="submit">Register</button>
+    </form>
+
+    <h3>Registered Students</h3>
+    <ul id="list"></ul>
+</div>
+
+<scriptconst form = document.getElementById("form");
+const list = document.getElementById("list");
+
+form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+    const course = document.getElementById("course").value;
+
+    const student = { name, email, phone, course };
+
+    let students = JSON.parse(localStorage.getItem("students")) || [];
+    students.push(student);
+    localStorage.setItem("students", JSON.stringify(students));
+
+    displayStudents();
+    form.reset();
+});
+
+function displayStudents() {
+    list.innerHTML = "";
+    let students = JSON.parse(localStorage.getItem("students")) || [];
+
+    students.forEach(s => {
+        let li = document.createElement("li");
+        li.textContent = `${s.name} - ${s.email} - ${s.phone} - ${s.course}`;
+        list.appendChild(li);
+    });
+}
+
+displayStudents();></script>
+</body>
+</html>
